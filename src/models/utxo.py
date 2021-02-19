@@ -82,8 +82,7 @@ class Utxo():
         else:
             raise Exception
 
-    # todo: do this without constants or verify these constants myself
-    # taken from https://bitcoin.stackexchange.com/questions/66428/what-is-the-size-of-different-bitcoin-transaction-types
+
     @staticmethod
     def output_size(destination_address: Union[Address, "WalletAddress"]):
         from models.wallet_address import WalletAddress
@@ -97,8 +96,7 @@ class Utxo():
         elif isinstance(destination_address, P2WPKHAddress):
             return P2WPKH_OUTPUT_BYTES
         else:
-            raise Exception
-            #todo: what if i am sending to an "exotic" address type?
+            return P2PKH_OUTPUT_BYTES
 
 
 

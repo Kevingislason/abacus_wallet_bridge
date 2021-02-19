@@ -34,25 +34,28 @@ valid_block_2 = Block(
   VALID_BLOCK_1_HASH
 )
 
-@patch("persistence.config.Config.PATH", new="src/tests/test_config.ini")
-def setup_client():
+@pytest.fixture
+def mock_client():
     mock_client = BlockchainClient
     mock_client.get_block_by_hash =  Mock(return_value=valid_block_2)
     mock_client.get_most_recent_block = Mock(return_value=valid_block_4)
     mock_client.address_is_fresh = Mock(return_value=True)
-
-    mock_client.block_is_orphan = lambda _, block: True if block.hash == ORPHANED_BLOCK_3_HASH else False
-    mock_client.get_tx_ins_by_address = lambda _, address: address.tx_ins
+    mock_client.block_is_orphan = lambda block: True if block.hash == ORPHANED_BLOCK_3_HASH else False
+    mock_client.get_utxos_by_address = lambda address: address.utxos
+    return mock_client
 
 # Replace the block explorer with a mock to simulate an orphaned block situation
-@patch("networking.blockchain.blockchain.Blockchainlient", new=setup_client())
 # Mock out config stuff
 @patch("persistence.config.Config.PATH", new="src/tests/test_config.ini")
 @patch("persistence.wallet_file.WalletFile.PATH", new='src/tests/test_purge_block_wallet.json')
 @patch("persistence.wallet_file.WalletFile.save", new=lambda _: None)
-def test_purge_block():
+def test_purge_block(mock_client):
     watch_only_wallet = WatchOnlyWallet()
     controller = MainController(watch_only_wallet)
+    controller.blockchain_client = mock_client
+    watch_only_wallet.load(*WalletFile.load())
+    controller._sync_to_blockchain()
+    watch_only_wallet.refresh_balances()
     # Tx_ins from the orphaned block should not show up in our balance
     assert watch_only_wallet.spendable_balance_satoshis == 0
     assert watch_only_wallet.incoming_balance_satoshis == 888

@@ -18,7 +18,7 @@ from bitcointx.wallet import CPubKey as PubKey
 from bitcointx.wallet import P2PKHCoinAddress as P2PKHAddress
 from bitcointx.wallet import P2SHCoinAddress as P2SHAddress
 from bitcointx.wallet import P2WPKHCoinAddress as P2WPKHAddress
-from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from requests.exceptions import ConnectionError
 from serial import SerialException
 
@@ -278,7 +278,7 @@ class MainController(QObject):
 
     def get_max_possible_spend(self, is_priority: bool,
                       recipient: Optional[ExternalAddress]) -> int:
-        fee_per_byte = self.blockchain_client.fee_estimation_client(is_priority)
+        fee_per_byte = self.fee_estimation_client.get_current_fee_per_byte(is_priority)
         total_effective_value = get_total_effective_value(self.watch_only_wallet, fee_per_byte)
 
         if recipient:

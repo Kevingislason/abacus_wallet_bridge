@@ -1,5 +1,5 @@
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
 
 from controllers.main_controller import MainController
 from models.watch_only_wallet import WatchOnlyWallet
@@ -24,7 +24,7 @@ class InitializeWalletView(QWidget):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
         self.init_wallet_label = QLabel()
-        self.init_wallet_label.setAlignment(Qt.AlignCenter)
+        self.init_wallet_label.setAlignment(Qt.Alignment.AlignCenter)
         if HardwareWalletFile.exists():
             self.init_wallet_label.setText(self.LOADING_TEXT)
         else:

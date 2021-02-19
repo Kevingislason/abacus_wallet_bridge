@@ -2,9 +2,9 @@ import configparser
 import sys
 from os import path
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import QFont
+from PyQt6.QtWidgets import *
 
 from controllers.main_controller import MainController
 from models.watch_only_wallet import WatchOnlyWallet
@@ -33,7 +33,7 @@ def main():
     font = QFont("Courier", 15)
     app.setFont(font)
     ex = AbacusWalletBridge()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 if __name__ == '__main__':
     main()

@@ -8,7 +8,7 @@ from bitcointx.core import COutPoint as OutPoint
 from bitcointx.core import CTransaction as Transaction
 from bitcointx.core import lx, x
 from bitcointx.wallet import CCoinAddress as Address
-from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from requests.exceptions import ConnectionError
 
 from models.block import Block

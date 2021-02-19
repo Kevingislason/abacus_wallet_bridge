@@ -1,8 +1,8 @@
 from io import BytesIO
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 
 import qrcode
 from controllers.main_controller import MainController
@@ -27,7 +27,7 @@ class AddressDetailView(QFrame):
         )
         self.address = None
 
-        self.size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.size_policy.setHorizontalStretch(3)
         self.setSizePolicy(self.size_policy)
         self.layout = QVBoxLayout()
@@ -35,43 +35,40 @@ class AddressDetailView(QFrame):
 
         self.stack = QStackedWidget()
         self.no_address_text = QLabel("Generate a receiving address to continue")
-        self.no_address_text.setAlignment(Qt.AlignCenter)
+        self.no_address_text.setAlignment(Qt.Alignment.AlignCenter)
 
         self.details = QWidget()
         self.details.layout = QVBoxLayout()
         self.details.layout.setSpacing(30)
-        self.details.layout.setAlignment(Qt.AlignCenter)
+        self.details.layout.setAlignment(None, Qt.Alignment.AlignCenter)
         self.details.setLayout(self.details.layout)
 
         self.address_name_container = QWidget()
         self.address_name_container.layout = QHBoxLayout()
-        self.address_name_container.layout.setAlignment(Qt.AlignCenter)
+        self.address_name_container.layout.setAlignment(None, Qt.Alignment.AlignCenter)
         self.address_name_container.setLayout(self.address_name_container.layout)
 
         self.address_freshness_icon = QLabel()
-        self.address_freshness_icon.setAlignment(Qt.AlignCenter)
-
         self.address_name_text = QLabel()
-        self.address_name_text.setAlignment(Qt.AlignCenter)
         self.address_name_text.font = QFont()
         self.address_name_text.font.setPointSizeF(18)
         self.address_name_text.font.setBold(True)
         self.address_name_text.setFont(self.address_name_text.font)
-        self.address_name_container.layout.addWidget(self.address_freshness_icon)
-        self.address_name_container.layout.addWidget(self.address_name_text)
+        self.address_name_container.layout.addWidget(self.address_freshness_icon, alignment=Qt.Alignment.AlignRight)
+        self.address_name_container.layout.addWidget(self.address_name_text, alignment=Qt.Alignment.AlignLeft)
 
         self.qr_code = QLabel()
-        self.qr_code.setAlignment(Qt.AlignCenter)
+        self.qr_code.setAlignment(Qt.Alignment.AlignCenter)
 
         self.address_text = QLabel()
-        self.address_text.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.address_text.setTextInteractionFlags(Qt.TextInteractionFlags.TextSelectableByMouse)
         self.key_path_text = QLabel()
-        self.key_path_text.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self.key_path_text.setTextInteractionFlags(Qt.TextInteractionFlags.TextSelectableByMouse)
 
         self.lower_details_container = QWidget()
         self.lower_details_container.layout = QVBoxLayout()
         self.lower_details_container.setLayout(self.lower_details_container.layout)
-        self.lower_details_container.size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.lower_details_container.size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
 
         self.lower_details_container.layout.addWidget(self.address_text)
         self.lower_details_container.layout.addWidget(self.key_path_text)
@@ -98,8 +95,8 @@ class AddressDetailView(QFrame):
 
     def set_address_icon(self):
         icon_style = (
-          QStyle.SP_DialogYesButton if self.address.is_fresh
-          else QStyle.SP_DialogNoButton
+          QStyle.StandardPixmap.SP_DialogYesButton if self.address.is_fresh
+          else QStyle.StandardPixmap.SP_DialogNoButton
         )
         icon_tooltip_text = (
           "This address is fresh" if self.address.is_fresh

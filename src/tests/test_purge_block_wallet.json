@@ -1,5 +1,7 @@
 {
-  "master_xpub": "tpubD6NzVbkrYhZ4YeGcbzn5YXU24FkAErRtedfMj7b9Rr2cW9WFSVE4DNtd6fBay4YAWJkkRZtmfmPnBtiizC9Q9idRmrijZ1D61Yfov15dD8F",
+  "wallet_xpub": "tpubDDWen2NWVVzUGWiFqz3SKq84GtWPh5oAKgByBWfSXmkeEx1TcCJVSVzr3HuLFt4PBSH7eBgZurADcAUHgE4Z7gTgAKVNMPvtpiB4oYB5s4Z",
+  "master_fingerprint": "b3cc320b",
+  "base_keypath": "m/84h/1h/0h",
   "address_type": "T_P2PKHCoinAddress",
   "current_block": {
       "hash": "00000000000000ef46962afbc2bebc0f871b1e538c4936bc30d8497e0f1efb16",
@@ -10,9 +12,10 @@
       {
           "is_fresh": false,
           "was_recovered": false,
-          "tx_ins": [
+          "utxos": [
               {
-                  "satoshi_value": 999,
+                  "value": 999,
+                  "script_pubkey": "111111",
                   "is_awaiting_spend": false,
                   "block": {
                       "hash": "00000000000000ef46962afbc2bebc0f871b1e538c4936bc30d8497e0f1efb16",
@@ -29,9 +32,10 @@
       {
         "is_fresh": false,
         "was_recovered": false,
-        "tx_ins": [
+        "utxos": [
             {
-                "satoshi_value": 888,
+                "value": 888,
+                "script_pubkey": "111111",
                 "is_awaiting_spend": false,
                 "block": {
                     "hash": "000000000000009eef6ebb9fe7a90b8e41673f34866121bbe5039d659d294b3b",

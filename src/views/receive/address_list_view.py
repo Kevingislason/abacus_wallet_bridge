@@ -1,6 +1,6 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 
 from controllers.main_controller import MainController
 from models.watch_only_wallet import WatchOnlyWallet
@@ -20,7 +20,7 @@ class AddressListView(QFrame):
           self.handle_incoming_balance_changed
       )
 
-      self.size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+      self.size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
       self.size_policy.setHorizontalStretch(2)
       self.setSizePolicy(self.size_policy)
       self.layout = QVBoxLayout()
@@ -29,16 +29,16 @@ class AddressListView(QFrame):
       self.error_modal = ErrorModal()
 
       self.scroll = QScrollArea()
-      self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-      self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+      self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+      self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
       self.scroll.setWidgetResizable(True)
-      self.scroll.setAlignment(Qt.AlignTop)
+      self.scroll.setAlignment(Qt.Alignment.AlignTop)
       self.list = QListWidget()
       self.scroll.setWidget(self.list)
 
       for address in self.watch_only_wallet.ui_addresses:
           address_widget = QListWidgetItem(address.label)
-          icon_style = QStyle.SP_DialogYesButton if address.is_fresh else QStyle.SP_DialogNoButton
+          icon_style = QStyle.StandardPixmap.SP_DialogYesButton if address.is_fresh else QStyle.StandardPixmap.SP_DialogNoButton
           icon = self.style().standardIcon(icon_style)
           address_widget.setIcon(icon)
           self.list.addItem(address_widget)
@@ -46,7 +46,7 @@ class AddressListView(QFrame):
       self.new_address_name_input = QLineEdit()
       self.new_address_name_input.setMaxLength(32)
       self.new_address_name_input.setPlaceholderText("Label (Required)")
-      self.new_address_name_input.setAlignment(Qt.AlignBottom)
+      self.new_address_name_input.setAlignment(Qt.Alignment.AlignBottom)
 
       self.new_address_button = QPushButton("Generate New Receiving Address")
       self.new_address_button.clicked.connect(self.handle_new_address_button_clicked)
@@ -68,7 +68,7 @@ class AddressListView(QFrame):
         self.new_address_name_input.clear()
         new_address = self.controller.derive_external_address(address_label)
         address_widget = QListWidgetItem(address_label)
-        icon_style = QStyle.SP_DialogYesButton
+        icon_style = QStyle.StandardPixmap.SP_DialogYesButton
         icon = self.style().standardIcon(icon_style)
         address_widget.setIcon(icon)
         self.list.clearSelection()

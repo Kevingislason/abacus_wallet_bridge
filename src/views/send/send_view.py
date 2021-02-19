@@ -1,8 +1,8 @@
 from bitcointx.core import coins_to_satoshi, satoshi_to_coins
 from bitcointx.wallet import CCoinAddress as ExternalAddress
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 from serial import SerialException
 
 from bitcoin_coin_selection.selection_types.coin_selection import CoinSelection
@@ -29,10 +29,10 @@ class SendView(QWidget):
         self.watch_only_wallet = watch_only_wallet
 
         self.layout = QVBoxLayout(self)
-        self.layout.setAlignment(Qt.AlignVCenter)
+        self.layout.setAlignment(None, Qt.Alignment.AlignVCenter)
         self.layout.setSpacing(40)
         self.setLayout(self.layout)
-        self.size_policy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.setSizePolicy(self.size_policy)
 
         self.error_modal = ErrorModal()
@@ -48,18 +48,18 @@ class SendView(QWidget):
 
         self.send_button_form = QWidget()
         self.send_button_form.layout = QVBoxLayout()
-        self.send_button_form.layout.setAlignment(Qt.AlignCenter)
         self.send_button_form.setLayout(self.send_button_form.layout)
         self.send_button = QPushButton("Send transaction")
+        self.send_button.setMaximumWidth(300)
         self.send_button.clicked.connect(self.handle_click_send_button)
         self.send_button.setEnabled(False)
         self.send_button.setToolTip("Connect hardware wallet")
-        self.send_button_form.layout.addWidget(self.send_button)
+        self.send_button_form.layout.addWidget(self.send_button, alignment=Qt.Alignment.AlignCenter)
 
         self.layout.addWidget(self.target_address_form)
         self.layout.addWidget(self.fee_selection_form)
         self.layout.addWidget(self.send_amount_form)
-        self.layout.addWidget(self.send_button_form)
+        self.layout.addWidget(self.send_button_form, alignment=Qt.Alignment.AlignVCenter)
 
         self.init_event_handlers()
 

@@ -1,6 +1,6 @@
 from bitcointx.core import satoshi_to_coins
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
 
 from controllers.main_controller import MainController
 from models.watch_only_wallet import WatchOnlyWallet
@@ -28,13 +28,13 @@ class StatusBarView(QStatusBar):
         self.balance_label_container.layout = QHBoxLayout()
         self.balance_label_container.setLayout(self.balance_label_container.layout)
         self.balance_label = QLabel()
-        self.balance_label.setAlignment(Qt.AlignCenter)
+        self.balance_label.setAlignment(Qt.Alignment.AlignCenter)
 
         self.connection_label_container = QWidget()
         self.connection_label_container.layout = QHBoxLayout()
         self.connection_label_container.setLayout(self.connection_label_container.layout)
         self.connection_label = QLabel("Connected")
-        self.connection_label.setAlignment(Qt.AlignCenter)
+        self.connection_label.setAlignment(Qt.Alignment.AlignCenter)
         self.addWidget(self.balance_label, 0)
         self.addPermanentWidget(self.connection_label, 0)
 

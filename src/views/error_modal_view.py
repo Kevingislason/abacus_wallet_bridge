@@ -1,6 +1,6 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
 
 
 class ErrorMessage:
@@ -20,7 +20,7 @@ class ErrorModal(QDialog):
         super().__init__()
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
-        self.layout.setAlignment(Qt.AlignCenter)
+        self.layout.setAlignment(None, Qt.Alignment.AlignCenter)
         self.setModal(True)
 
         self.error_message = QLabel("")
@@ -30,7 +30,7 @@ class ErrorModal(QDialog):
         self.okay_button.setMaximumWidth(100)
         self.okay_button.setAutoDefault(False)
         self.okay_button.setDefault(False)
-        self.layout.addWidget(self.okay_button, alignment=Qt.AlignCenter)
+        self.layout.addWidget(self.okay_button, alignment=Qt.Alignment.AlignCenter)
         self.okay_button.clicked.connect(self.handle_click_okay_button)
 
 
@@ -41,5 +41,5 @@ class ErrorModal(QDialog):
 
     def show(self, error_message: ErrorMessage):
         self.error_message.setText(error_message)
-        self.exec_()
+        self.exec()
         self.activateWindow()

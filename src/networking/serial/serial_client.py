@@ -8,7 +8,7 @@ from bitcointx.core import CTransaction as Transaction
 from bitcointx.core import x
 from bitcointx.core.psbt import PartiallySignedTransaction
 from bitcointx.wallet import CCoinExtPubKey as ExtPubKey
-from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from serial import SerialException
 
 from models.hardware_wallet_init_dto import HardwareWalletInitDTO

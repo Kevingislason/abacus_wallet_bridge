@@ -12,7 +12,6 @@ from persistence.wallet_file import WalletFile
 
 @patch("persistence.wallet_file.WalletFile.PATH", new='src/tests/test_load_wallet.json')
 @patch("persistence.config.Config.get_network", new=lambda: Network.TESTNET)
-@patch("controllers.main_controller.MainController.sync_to_blockchain", new=lambda _: None)
 def test_load_wallet():
     watch_only_wallet = WatchOnlyWallet()
     controller = MainController(watch_only_wallet)
