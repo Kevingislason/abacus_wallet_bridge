@@ -8,7 +8,7 @@
       "name": "Wallet bridge main",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/src/main.py",
+      "program": "${workspaceFolder}/src/Abacus Wallet Bridge.py",
       "console": "integratedTerminal",
       "justMyCode": false
     }

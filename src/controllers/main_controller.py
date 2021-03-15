@@ -308,6 +308,7 @@ class MainController(QObject):
             utxo.is_awaiting_spend = True
         if selection.change_value > 0:
             self.watch_only_wallet.last_change_address.is_fresh = False
+        self.watch_only_wallet.refresh_balances()
         WalletFile.save(self.watch_only_wallet)
 
 
@@ -317,7 +318,7 @@ class MainController(QObject):
         selection: CoinSelection,
     ) -> Transaction:
         tx_ins = self.assemble_transaction_inputs(selection)
-        tx_outs = self.assemble_transaction_outputs(recipient)
+        tx_outs = self.assemble_transaction_outputs(recipient, selection)
         return Transaction(tx_ins, tx_outs)
 
 
@@ -339,8 +340,8 @@ class MainController(QObject):
 
     def assemble_transaction_spend_output(
         self,
-        selection: CoinSelection,
-        recipient: ExternalAddress
+        recipient: ExternalAddress,
+        selection: CoinSelection
     ):
         return TxOut(selection.target_value, recipient.to_scriptPubKey())
 

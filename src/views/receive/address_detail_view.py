@@ -54,8 +54,8 @@ class AddressDetailView(QFrame):
         self.address_name_text.font.setPointSizeF(18)
         self.address_name_text.font.setBold(True)
         self.address_name_text.setFont(self.address_name_text.font)
-        self.address_name_container.layout.addWidget(self.address_freshness_icon, alignment=Qt.Alignment.AlignRight)
-        self.address_name_container.layout.addWidget(self.address_name_text, alignment=Qt.Alignment.AlignLeft)
+        # self.address_name_container.layout.addWidget(self.address_freshness_icon, alignment=Qt.Alignment.AlignCenter)
+        self.address_name_container.layout.addWidget(self.address_name_text, alignment=Qt.Alignment.AlignCenter)
 
         self.qr_code = QLabel()
         self.qr_code.setAlignment(Qt.Alignment.AlignCenter)

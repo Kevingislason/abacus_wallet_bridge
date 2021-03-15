@@ -1,3 +1,5 @@
+from time import sleep
+
 from bitcointx.core import coins_to_satoshi, satoshi_to_coins
 from bitcointx.wallet import CCoinAddress as ExternalAddress
 from PyQt6.QtCore import *
@@ -11,15 +13,15 @@ from errors.tx_broadcast_api_error import TxBroadcastAPIError
 from models.watch_only_wallet import WatchOnlyWallet
 from persistence.config import Network
 from utils.coin_selection_utils import map_coin_selection_to_utxos
-from views.error_modal_view import ErrorMessage, ErrorModal
+from views.modal_view import Message, Modal
 from views.send.fee_selection_form_view import FeeSelectionForm
 from views.send.send_amount_form_view import SendAmountForm
 from views.send.target_address_form_view import TargetAddressForm
 
 
 class SendView(QWidget):
-    TESTNET_TX_URL = "https://live.blockcypher.com/btc-testnet/tx/{txid}"
-    MAINNET_TX_URL ="https://live.blockcypher.com/btc/tx/{txid}"
+    TESTNET_TX_URL = "https://live.blockcypher.com/btc-testnet/tx/{tx_id}"
+    MAINNET_TX_URL ="https://live.blockcypher.com/btc/tx/{tx_id}"
 
     def __init__(self, controller: MainController, watch_only_wallet: WatchOnlyWallet):
 
@@ -35,7 +37,7 @@ class SendView(QWidget):
         self.size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.setSizePolicy(self.size_policy)
 
-        self.error_modal = ErrorModal()
+        self.modal = Modal()
 
         self.target_address_form = TargetAddressForm()
 
@@ -128,31 +130,16 @@ class SendView(QWidget):
             tx_id = self.controller.orchestrate_spend(address, coin_selection)
             self.send_button.setEnabled(True)
             if not tx_id:
-                self.error_modal.show(ErrorMessage.TX_REJECTED)
+                self.modal.show(Message.TX_REJECTED)
             else:
-                self.show_transaction_url(tx_id)
+                self.modal.show(Message.TX_SENT)
 
         except SerialException:
-            self.error_modal.show(ErrorMessage.SERIAL_DISCONNECT)
+            self.modal.show(Message.SERIAL_DISCONNECT)
         except TxBroadcastAPIError:
-            self.error_modal.show(ErrorMessage.TX_BROADCAST_FAILED)
+            self.modal.show(Message.TX_BROADCAST_FAILED)
         finally:
             self.send_button.setEnabled(True)
-
-
-
-    def show_transaction_url(self, tx_id: str):
-        if self.controller.network == Network.TESTNET:
-            tx_url = self.TESTNET_TX_URL
-        elif self.controller.network == Network.MAINNET:
-            tx_url = self.MAINNET_TX_URL
-        tx_url = QUrl(tx_url.format(tx_id))
-        QDesktopServices.openUrl(tx_url)
-
-
-
-
-
 
     ############################ Event Handlers ##############################
 
@@ -161,26 +148,26 @@ class SendView(QWidget):
         address_str = self.address_input_text
         if not self.address_is_not_none(address_str):
             self.send_button.setEnabled(True)
-            self.error_modal.show(ErrorMessage.NO_ADDRESS)
+            self.modal.show(Message.NO_ADDRESS)
             return
         elif not self.address_is_valid(address_str):
             self.send_button.setEnabled(True)
-            self.error_modal.show(ErrorMessage.INVALID_ADDRESS)
+            self.modal.show(Message.INVALID_ADDRESS)
             return
 
         address = ExternalAddress(address_str)
         selection = self.select_coins(address)
         if selection.outcome == selection.Outcome.INSUFFICIENT_FUNDS:
             self.send_button.setEnabled(True)
-            self.error_modal.show(ErrorMessage.INSUFFICIENT_FUNDS)
+            self.modal.show(Message.INSUFFICIENT_FUNDS)
             return
         elif selection.outcome == selection.Outcome.INSUFFICIENT_FUNDS_AFTER_FEES:
             self.send_button.setEnabled(True)
-            self.error_modal.show(ErrorMessage.INSUFFICIENT_FUNDS_AFTER_FEES)
+            self.modal.show(Message.INSUFFICIENT_FUNDS_AFTER_FEES)
             return
         elif selection.outcome == selection.Outcome.INVALID_SPEND:
             self.send_button.setEnabled(True)
-            self.error_modal.show(ErrorMessage.INVALID_SPEND)
+            self.modal.show(Message.INVALID_SPEND)
             return
 
         # spinner or something

@@ -3,7 +3,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 
 
-class ErrorMessage:
+class Message:
     NO_ADDRESS = "Must specify recipient's address"
     INVALID_ADDRESS = "Specified address is invalid"
     INSUFFICIENT_FUNDS = "Insufficient funds"
@@ -15,7 +15,7 @@ class ErrorMessage:
     GAP_LIMIT_REACHED = "Gap limit reached;\n use an existing address\n before generating new addresses"
 
 
-class ErrorModal(QDialog):
+class Modal(QDialog):
     def __init__(self):
         super().__init__()
         self.layout = QVBoxLayout()
@@ -23,8 +23,8 @@ class ErrorModal(QDialog):
         self.layout.setAlignment(None, Qt.Alignment.AlignCenter)
         self.setModal(True)
 
-        self.error_message = QLabel("")
-        self.layout.addWidget(self.error_message)
+        self.message = QLabel("")
+        self.layout.addWidget(self.message)
 
         self.okay_button = QPushButton("Okay")
         self.okay_button.setMaximumWidth(100)
@@ -39,7 +39,7 @@ class ErrorModal(QDialog):
       self.close()
 
 
-    def show(self, error_message: ErrorMessage):
-        self.error_message.setText(error_message)
+    def show(self, message: ModalMessage):
+        self.message.setText(message)
         self.exec()
         self.activateWindow()

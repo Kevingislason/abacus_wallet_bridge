@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import *
 
 from controllers.main_controller import MainController
 from models.watch_only_wallet import WatchOnlyWallet
-from views.error_modal_view import ErrorMessage, ErrorModal
+from views.modal_view import Message, Modal
 
 
 class AddressListView(QFrame):
@@ -26,7 +26,7 @@ class AddressListView(QFrame):
       self.layout = QVBoxLayout()
       self.setLayout(self.layout)
 
-      self.error_modal = ErrorModal()
+      self.modal = Modal()
 
       self.scroll = QScrollArea()
       self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
@@ -58,7 +58,7 @@ class AddressListView(QFrame):
 
     def handle_new_address_button_clicked(self):
         if self.watch_only_wallet.has_reached_gap_limit:
-            self.error_modal.show(ErrorMessage.GAP_LIMIT_REACHED)
+            self.modal.show(Message.GAP_LIMIT_REACHED)
             return
 
         address_label = self.new_address_name_input.text()
