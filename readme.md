@@ -1,5 +1,5 @@
 # Abacus Wallet Bridge
-A desktop application to support [Abacus Wallet](https://github.com/Kevingislason/abacus_wallet), a DIY Bitcoin hardware wallet
+Desktop application to support [Abacus Wallet](https://github.com/Kevingislason/abacus_wallet), a DIY Bitcoin hardware wallet
 
 ## Demo
 https://www.youtube.com/watch?v=G7fQn-IfNgs
