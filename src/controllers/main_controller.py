@@ -387,45 +387,4 @@ class MainController(QObject):
             BIP32Path(last_change_address.key_path)
         )
         change_output.derivation_map[last_change_address.pub_key] = address_derivation_info
-
-
-
-
-
-
-        # test only #
-        # self.serial_client.request_load_hardware_wallet(self.watch_only_wallet)
-        # address = ExternalAddress("mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB")
-        # target_value = 10000
-        # selection = self.select_coins(10000, address, False)
-        # if selection.outcome == selection.Outcome.SUCCESS:
-        #     selected_utxos = map_coin_selection_to_utxos(
-        #         selection, self.watch_only_wallet)
-        #     malicious_transaction = self.assemble_malicious_tx(
-        #         address, selected_utxos, target_value, selection.change_value
-        #     )
-        #     transaction = self.assemble_tx(address, selected_utxos, target_value, selection.change_value)
-
-        #     psbt = self.assemble_psbt(transaction, selected_utxos)
-        #     self.serial_client.request_sign_transaction(psbt)
-
-
-        # else:
-        #     raise Exception("not enough money")
-        # end test only #
-
-
-
-
-    # def sign_psbt(self, psbt: PartiallySignedTransaction):
-    #     # lines 418 - 430 in test_psbt should get you there
-
-    #     xpriv = ExtPrivKey("tprv8ZgxMBicQKsPehjZHpLLc55zCdP2KmM5afjfn48zmJcJAU4Jv9BcKunh8Ad5V8iHEo2juZRchVkXrRNnqq7cdNpiRsH784hzp1SWwVY7bNP")
-
-    #     kstore = KeyStore(xpriv, require_path_templates=False)
-
-    #     result = psbt.sign(kstore, finalize=True)
-
-    #     print(b2x(psbt.extract_transaction().serialize()))
-
-    #     return result.is_final and result.is_ready
+        
